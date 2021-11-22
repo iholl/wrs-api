@@ -6,14 +6,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from decouple import config
 
-# connection = psycopg2.connect(
-#   user="fnrysdbbvtpjwi", 
-#   password="9282012800a9ba7b9a33a9f47db1240e4b66a549afcbb1cd0cb38a5fea37ff20",
-#   host="ec2-23-23-141-171.compute-1.amazonaws.com",
-#   port="5432",
-#   database="dmq87c8s22tvn"
-# )
-
 connection = psycopg2.connect(
   user=config("DATABASE_USER"), 
   password=config("DATABASE_PASSWORD"),
