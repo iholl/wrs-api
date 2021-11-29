@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from decouple import config
@@ -43,5 +43,8 @@ async def root():
 @app.get("/sightings/{id}")
 async def read_item(id):
   db_cursor = connection.cursor(cursor_factory=RealDictCursor)
-  db_cursor.execute("SELECT * FROM sightings WHERE ndow_id='{}';".format(id))
-  return db_cursor.fetchall()
+  data = db_cursor.execute("SELECT * FROM sightings WHERE ndow_id='{}';".format(id))
+  if not data:
+    raise HTTPException(status_code=404, detail="sighting not found")
+  else:
+    return db_cursor.fetchall()
