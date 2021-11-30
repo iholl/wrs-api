@@ -1,9 +1,7 @@
 import psycopg2
 from psycopg2.extras import RealDictCursor
-
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-
 from decouple import config
 
 connection = psycopg2.connect(
@@ -48,3 +46,4 @@ async def read_item(id):
     raise HTTPException(status_code=404, detail="sighting not found")
   else:
     return db_cursor.fetchall()
+    
