@@ -46,4 +46,3 @@ async def read_item(id):
     raise HTTPException(status_code=404, detail="sighting not found")
   else:
     return db_cursor.fetchall()
-    
