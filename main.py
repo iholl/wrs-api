@@ -63,6 +63,7 @@ async def root():
                 'properties', json_build_object(
                   'ndow_id', ndow_id,
                   'sight_time', sight_time,
+                  'species', species,
                   'id', id
                 )
             )
