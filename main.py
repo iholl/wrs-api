@@ -38,14 +38,14 @@ async def root():
   db_cursor.execute("SELECT * FROM sightings;")
   return db_cursor.fetchall()
 
-@app.get("/sightings/{id}")
-async def read_item(id):
-  db_cursor = connection.cursor(cursor_factory=RealDictCursor)
-  data = db_cursor.execute("SELECT * FROM sightings WHERE ndow_id='{}';".format(id))
-  if not data:
-    raise HTTPException(status_code=404, detail="sighting not found")
-  else:
-    return db_cursor.fetchall()
+# @app.get("/sightings/{id}")
+# async def read_item(id):
+#   db_cursor = connection.cursor(cursor_factory=RealDictCursor)
+#   data = db_cursor.execute("SELECT * FROM sightings WHERE ndow_id='{}';".format(id))
+#   if not data:
+#     raise HTTPException(status_code=404, detail="sighting not found")
+#   else:
+#     return db_cursor.fetchall()
 
 @app.get("/geojson")
 async def root():
