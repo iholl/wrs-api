@@ -46,3 +46,33 @@ async def read_item(id):
     raise HTTPException(status_code=404, detail="sighting not found")
   else:
     return db_cursor.fetchall()
+
+@app.get("/geojson")
+async def root():
+  db_cursor = connection.cursor(cursor_factory=RealDictCursor)
+  sql = """
+    SELECT ST_AsText(ST_Transform(geom, 4326)) As wgs_geom FROM sightings;
+
+    SELECT json_build_object(
+        'type', 'FeatureCollection',
+        'crs',  json_build_object(
+            'type',      'name', 
+            'properties', json_build_object(
+                'name', 'EPSG:4326'  
+            )
+        ), 
+        'features', json_agg(
+            json_build_object(
+                'type',       'Feature',
+                'id',         id, 
+                'geometry',   ST_AsGeoJSON(ST_Transform(geom, 4326))::json,
+                'properties', json_build_object(
+                )
+            )
+        )
+    )
+    FROM sightings;
+  """
+  db_cursor.execute(sql)
+
+  return db_cursor.fetchall()
