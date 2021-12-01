@@ -55,18 +55,15 @@ async def root():
 
     SELECT json_build_object(
         'type', 'FeatureCollection',
-        'crs',  json_build_object(
-            'type',      'name', 
-            'properties', json_build_object(
-                'name', 'EPSG:4326'  
-            )
-        ), 
         'features', json_agg(
             json_build_object(
                 'type',       'Feature',
                 'id',         id, 
                 'geometry',   ST_AsGeoJSON(ST_Transform(geom, 4326))::json,
                 'properties', json_build_object(
+                  'ndow_id', ndow_id,
+                  'sight_time', sight_time,
+                  'id', id
                 )
             )
         )
