@@ -32,6 +32,7 @@ async def root():
   db_cursor.execute("SELECT * FROM surveys;")
   return db_cursor.fetchall()
 
+# get all sightings
 @app.get("/sightings/")
 async def root():
   db_cursor = connection.cursor(cursor_factory=RealDictCursor)
